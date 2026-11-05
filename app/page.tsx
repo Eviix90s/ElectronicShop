@@ -10,7 +10,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { getFeaturedProducts, products } from "@/lib/data";
 
 /** Título de sección: misma tipografía que el titular del hero, compartido por las secciones anchas. */
-const sectionTitle = "mt-5 max-w-[12ch] text-[clamp(40px,5.2vw,72px)] font-semibold tracking-[-0.03em]";
+const sectionTitle = "mt-5 max-w-[12ch] text-[clamp(36px,5.2vw,72px)] font-semibold tracking-[-0.03em]";
 
 export default function HomePage() {
   const featured = getFeaturedProducts();

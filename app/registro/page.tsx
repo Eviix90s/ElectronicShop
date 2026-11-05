@@ -12,7 +12,7 @@ export default function RegistroPage() {
     <div className="wrap py-14 md:py-20">
       <div className="mx-auto max-w-lg text-center">
         {/* Misma tipografía y tamaño que los títulos de la portada, centrado. */}
-        <h1 className="text-[clamp(40px,5.2vw,72px)] font-semibold tracking-[-0.03em]">Crea tu cuenta</h1>
+        <h1 className="text-[clamp(36px,5.2vw,72px)] font-semibold tracking-[-0.03em]">Crea tu cuenta</h1>
         <p className="mx-auto mt-5 max-w-[40ch] text-[19px] text-muted">
           Pedidos guardados, avisos de recogida y precios para estudiantes.
         </p>

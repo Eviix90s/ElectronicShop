@@ -45,7 +45,7 @@ export function SearchForm({ initialQuery = "", className, size = "sm", autoFocu
         autoFocus={autoFocus}
         className={cn(
           "glass w-full rounded-full text-ink placeholder:text-muted/70 focus:border-ink focus:outline-none",
-          size === "lg" ? "h-13 pr-11 pl-11 text-base" : "h-11 pr-9 pl-9 text-sm",
+          size === "lg" ? "h-13 pr-11 pl-11 text-base" : "h-11 pr-9 pl-9 text-base md:text-sm",
         )}
       />
       {q ? (

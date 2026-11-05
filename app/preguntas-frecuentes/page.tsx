@@ -36,7 +36,7 @@ export default function FaqPage() {
       <section className="wrap py-14 md:py-20">
         <p className="eyebrow">Preguntas frecuentes</p>
         {/* Misma tipografía, tamaño y posición que los títulos de la portada. */}
-        <h1 className="mt-5 max-w-[14ch] text-[clamp(40px,5.2vw,72px)] font-semibold tracking-[-0.03em]">
+        <h1 className="mt-5 max-w-[14ch] text-[clamp(36px,5.2vw,72px)] font-semibold tracking-[-0.03em]">
           Sin letra pequeña.
         </h1>
       </section>

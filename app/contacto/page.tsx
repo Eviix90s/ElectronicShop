@@ -25,7 +25,7 @@ export default function ContactoPage() {
       <section className="wrap py-14 md:py-20">
         <p className="eyebrow">Contacto</p>
         {/* Misma tipografía, tamaño y posición que los títulos de la portada. */}
-        <h1 className="mt-5 max-w-[14ch] text-[clamp(40px,5.2vw,72px)] font-semibold tracking-[-0.03em]">
+        <h1 className="mt-5 max-w-[14ch] text-[clamp(36px,5.2vw,72px)] font-semibold tracking-[-0.03em]">
           Hablemos de tu práctica.
         </h1>
         <p className="mt-6 max-w-[52ch] text-[19px] text-muted">

@@ -70,7 +70,7 @@ export function VisitCounter() {
       >
         {visits !== null ? format(visits) : "—"}
       </span>
-      <h2 className="mx-auto mt-6 max-w-[20ch] text-[clamp(40px,5.2vw,72px)] font-semibold tracking-[-0.03em]">
+      <h2 className="mx-auto mt-6 max-w-[20ch] text-[clamp(36px,5.2vw,72px)] font-semibold tracking-[-0.03em]">
         personas han visitado la tienda desde que abrimos.
       </h2>
     </Reveal>

@@ -35,6 +35,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* iOS permite arrastrar en horizontal aunque el body lo oculte; clip lo corta sin crear scroll. */
+  overflow-x: clip;
 }
 
 body {

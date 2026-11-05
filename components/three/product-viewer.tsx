@@ -70,6 +70,11 @@ export interface ProductViewerProps {
   frameMarks?: boolean;
   /** Comportamiento de la rueda del ratón; por defecto "modifier" */
   wheelZoom?: WheelZoomMode;
+  /**
+   * Gestos táctiles: "pan-y" deja pasar el scroll vertical de la página y usa el
+   * arrastre horizontal para girar (visor inline); "none" captura todo (modal).
+   */
+  touchAction?: "none" | "pan-y";
   /** Rotación inicial [rx, ry]; por defecto la del prototipo para cada modelo */
   initialRotation?: [number, number];
   /** FOV vertical de la cámara (24–28). Inline 26, modal 28 */
@@ -392,6 +397,7 @@ export function ProductViewer({
   showHint = true,
   frameMarks = true,
   wheelZoom = "modifier",
+  touchAction = "pan-y",
   initialRotation,
   fov = 26,
   distanceFactor = 1.05,
@@ -512,7 +518,7 @@ export function ProductViewer({
             outputColorSpace: THREE.SRGBColorSpace,
           }}
           style={{ position: "absolute", inset: 0 }}
-          className="touch-none cursor-grab active:cursor-grabbing"
+          className={cn("cursor-grab active:cursor-grabbing", touchAction === "none" ? "touch-none" : "touch-pan-y")}
         >
           <StudioEnvironment />
           <StudioLights />
@@ -543,8 +549,8 @@ export function ProductViewer({
       </div>
 
       {showHint && (
-        <div className="mt-2 flex items-center justify-between gap-3">
-          <p className="min-w-0 font-mono text-xs tracking-[0.04em] text-muted">{hintText}</p>
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+          <p className="min-w-0 font-mono text-[11px] tracking-[0.04em] text-muted md:text-xs">{hintText}</p>
           <div className="flex flex-none items-center gap-1.5">
             <button type="button" onClick={() => zoomBy(1.25)} aria-label="Alejar" className={cn(toolButton, "size-9")}>
               <Minus size={14} aria-hidden="true" />

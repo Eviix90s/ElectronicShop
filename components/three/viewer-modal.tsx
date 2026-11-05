@@ -116,7 +116,7 @@ export function ViewerModal({ open, product, onClose, onAddToCart, categoryLabel
         ref={viewerRef}
         modelId={product.model3d}
         fov={28}
-        wheelZoom="always"
+        wheelZoom="always" touchAction="none"
         showHint={false}
         frameMarks={false}
         className={cn(

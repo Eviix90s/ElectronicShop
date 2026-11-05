@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 /** Título de sección: misma tipografía que los de la portada. */
-const sectionTitle = "mt-5 max-w-[14ch] text-[clamp(40px,5.2vw,72px)] font-semibold tracking-[-0.03em]";
+const sectionTitle = "mt-5 max-w-[14ch] text-[clamp(36px,5.2vw,72px)] font-semibold tracking-[-0.03em]";
 
 export default function NosotrosPage() {
   return (

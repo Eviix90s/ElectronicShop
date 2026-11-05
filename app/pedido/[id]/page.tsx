@@ -11,7 +11,7 @@ export default function PedidoPage({ params }: { params: Params }) {
     <div className="wrap py-14 md:py-20">
       <p className="eyebrow">Confirmación</p>
       {/* Misma tipografía, tamaño y posición que los títulos de la portada. */}
-      <h1 className="mt-5 max-w-[14ch] text-[clamp(40px,5.2vw,72px)] font-semibold tracking-[-0.03em]">
+      <h1 className="mt-5 max-w-[14ch] text-[clamp(36px,5.2vw,72px)] font-semibold tracking-[-0.03em]">
         Listo, ya lo tenemos.
       </h1>
       {/* params se lee dentro de Suspense: con Cache Components el resto de la página se prerenderiza. */}

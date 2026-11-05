@@ -21,21 +21,23 @@ export interface HeroTile {
   size: number;
   /** Solo se muestra en pantallas grandes */
   lg?: boolean;
+  /** Posición en móvil (en % del contenedor); sin ella, el tile se oculta en móvil para no tapar el texto */
+  mobile?: { left: number; top: number };
 }
 
 export const defaultTiles: HeroTile[] = [
-  { src: "/img/products/arduino.webp", alt: "", left: 5, top: 12, size: 100 },
+  { src: "/img/products/arduino.webp", alt: "", left: 5, top: 12, size: 100, mobile: { left: 4, top: 3 } },
   { src: "/img/products/jumper.webp", alt: "", left: 17, top: 60, size: 92, lg: true },
   { src: "/img/products/esp32.webp", alt: "", left: 27, top: 6, size: 84, lg: true },
   { src: "/img/products/capacitor.webp", alt: "", left: 3, top: 44, size: 80 },
-  { src: "/img/products/multimetro.webp", alt: "", left: 8, top: 80, size: 88 },
+  { src: "/img/products/multimetro.webp", alt: "", left: 8, top: 80, size: 88, mobile: { left: 4, top: 86 } },
   { src: "/img/products/protoboard.webp", alt: "", left: 31, top: 84, size: 90, lg: true },
   { src: "/img/products/resistor.webp", alt: "", left: 42, top: 3, size: 76, lg: true },
   { src: "/img/products/lcd.webp", alt: "", left: 57, top: 7, size: 84, lg: true },
-  { src: "/img/products/pir.webp", alt: "", left: 71, top: 12, size: 92 },
+  { src: "/img/products/pir.webp", alt: "", left: 71, top: 12, size: 92, mobile: { left: 76, top: 3 } },
   { src: "/img/products/hc05.webp", alt: "", left: 84, top: 26, size: 84, lg: true },
   { src: "/img/products/osciloscopio.webp", alt: "", left: 88, top: 50, size: 96 },
-  { src: "/img/products/rele.webp", alt: "", left: 80, top: 76, size: 88 },
+  { src: "/img/products/rele.webp", alt: "", left: 80, top: 76, size: 88, mobile: { left: 76, top: 86 } },
   { src: "/img/products/ldr.webp", alt: "", left: 63, top: 86, size: 84, lg: true },
   { src: "/img/products/transistor.webp", alt: "", left: 92, top: 6, size: 72 },
   { src: "/img/products/lm35.webp", alt: "", left: 48, top: 90, size: 72, lg: true },
@@ -78,11 +80,22 @@ function Tile({
   return (
     <motion.div
       ref={ref}
-      style={{ x: sx, y: sy, left: `${tile.left}%`, top: `${tile.top}%`, ["--s" as string]: `${tile.size}px` }}
+      style={{
+        x: sx,
+        y: sy,
+        ["--s" as string]: `${tile.size}px`,
+        ["--l" as string]: `${tile.left}%`,
+        ["--t" as string]: `${tile.top}%`,
+        ["--ml" as string]: `${tile.mobile?.left ?? tile.left}%`,
+        ["--mt" as string]: `${tile.mobile?.top ?? tile.top}%`,
+      }}
       initial={reduce ? false : { opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: index * 0.07, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className={cn("absolute size-(--s) max-md:size-16", tile.lg && "max-md:hidden")}
+      className={cn(
+        "absolute top-(--t) left-(--l) size-(--s) max-md:top-(--mt) max-md:left-(--ml) max-md:size-14",
+        (tile.lg || !tile.mobile) && "max-md:hidden",
+      )}
     >
       <motion.div
         className="glass grid size-full place-items-center rounded-[22px] p-2.5 max-md:rounded-2xl max-md:p-1.5"
@@ -143,7 +156,7 @@ export function FloatingTilesHero({ tiles = defaultTiles, children, className }:
       onPointerMove={onMove}
       onPointerLeave={onLeave}
       className={cn(
-        "relative grid min-h-[min(84vh,780px)] place-items-center overflow-hidden py-24 pb-18 max-md:min-h-0 max-md:py-16",
+        "relative grid min-h-[min(84vh,780px)] place-items-center overflow-hidden py-24 pb-18 max-md:min-h-0 max-md:pt-24 max-md:pb-28",
         className,
       )}
     >

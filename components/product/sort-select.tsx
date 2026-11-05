@@ -27,7 +27,7 @@ export function SortSelect({ value }: { value: SortValue }) {
           else next.set("orden", e.target.value);
           router.push(`/tienda${next.toString() ? `?${next}` : ""}`, { scroll: false });
         }}
-        className="glass h-10 cursor-pointer appearance-none rounded-full pr-9 pl-4 font-mono text-xs tracking-[0.04em] text-ink focus:border-ink focus:outline-none"
+        className="glass h-10 cursor-pointer appearance-none rounded-full pr-9 pl-4 font-mono text-base tracking-[0.04em] text-ink focus:border-ink focus:outline-none md:text-xs"
       >
         {sortOptions.map((o) => (
           <option key={o.value} value={o.value}>

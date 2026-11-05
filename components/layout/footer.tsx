@@ -41,7 +41,7 @@ export function Footer() {
         <Link
           href="/"
           aria-label="ElectronicShop, inicio"
-          className="inline-flex items-center gap-4 text-[clamp(40px,5.2vw,72px)] leading-none font-semibold tracking-[-0.03em] text-white md:gap-6"
+          className="inline-flex items-center gap-3 text-[clamp(30px,8.6vw,72px)] leading-none font-semibold tracking-[-0.03em] text-white md:gap-6"
         >
           <ChipMark className="size-[0.82em]" />
           ElectronicShop

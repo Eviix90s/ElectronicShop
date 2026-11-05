@@ -28,7 +28,7 @@ export function WishlistButton({ slug, name, size = "md", className }: WishlistB
       whileTap={reduce ? undefined : { scale: 0.85 }}
       className={cn(
         "glass grid cursor-pointer place-items-center rounded-full transition-colors",
-        size === "sm" ? "size-8" : "size-11",
+        size === "sm" ? "size-9" : "size-11",
         saved ? "text-copper" : "text-ink hover:text-copper",
         className,
       )}

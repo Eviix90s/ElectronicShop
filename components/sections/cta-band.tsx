@@ -44,7 +44,7 @@ export function CtaBand({
             "font-semibold",
             centered && "mx-auto",
             large
-              ? "mt-5 max-w-[16ch] text-[clamp(40px,5.2vw,72px)] tracking-[-0.03em]"
+              ? "mt-5 max-w-[16ch] text-[clamp(36px,5.2vw,72px)] tracking-[-0.03em]"
               : "mt-3 max-w-[22ch] text-[clamp(28px,3.4vw,40px)]",
           )}
         >

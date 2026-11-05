@@ -40,6 +40,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: "#f6f5f2",
   colorScheme: "light",
+  // Permite usar las zonas seguras (notch y barra inferior) en iOS y Android.
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

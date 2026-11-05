@@ -106,17 +106,17 @@ export function Showcase3d({ products, eyebrow, title }: Showcase3dProps) {
   if (!active?.model3d || !current?.model3d) return null;
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center lg:gap-x-14">
+    <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center lg:gap-x-14">
       {/* Título con la misma tipografía que el titular del hero. */}
       <Reveal>
         <p className="eyebrow">{eyebrow}</p>
-        <h2 className="mt-5 max-w-[12ch] text-[clamp(40px,5.2vw,72px)] font-semibold tracking-[-0.03em]">{title}</h2>
+        <h2 className="mt-5 max-w-[12ch] text-[clamp(36px,5.2vw,72px)] font-semibold tracking-[-0.03em]">{title}</h2>
       </Reveal>
 
-      <Reveal y={24}>
+      <Reveal y={24} className="min-w-0">
         <div
           ref={cardRef}
-          className="rounded-[24px] border border-line bg-surface p-3 shadow-card md:p-4"
+          className="min-w-0 rounded-[24px] border border-line bg-surface p-3 shadow-card md:p-4"
           onPointerEnter={() => {
             window.clearTimeout(holdTimer.current);
             setHeld(true);

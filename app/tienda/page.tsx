@@ -42,7 +42,7 @@ export default function TiendaPage({ searchParams }: { searchParams: SearchParam
       <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-6">
         <div>
           <p className="eyebrow">Tienda</p>
-          <h1 className="mt-5 max-w-[12ch] text-[clamp(40px,5.2vw,72px)] font-semibold tracking-[-0.03em]">
+          <h1 className="mt-5 max-w-[12ch] text-[clamp(36px,5.2vw,72px)] font-semibold tracking-[-0.03em]">
             Catálogo completo
           </h1>
         </div>

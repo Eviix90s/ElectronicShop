@@ -18,7 +18,7 @@ interface Msg {
 const STORAGE = "electronicshop-chat";
 const GREETED = "electronicshop-chat-greeted";
 const chip =
-  "inline-flex h-8 cursor-pointer items-center gap-1 rounded-full border border-line-strong bg-surface/80 px-3 text-xs font-medium text-ink transition-colors hover:border-ink";
+  "inline-flex h-9 cursor-pointer items-center gap-1 rounded-full border border-line-strong bg-surface/80 px-3 text-xs font-medium text-ink transition-colors hover:border-ink";
 
 /** Avatar de Electric con el punto verde de "en línea" (halo pulsante, quieto con reduced-motion). */
 function Avatar({ size = "md", children }: { size?: "sm" | "md"; children?: React.ReactNode }) {
@@ -140,7 +140,7 @@ export function ElectricChat() {
   return (
     <>
       {/* Botón flotante y saludo. El vidrio va en hijos: .glass fija position: relative. */}
-      <div className="fixed right-4 bottom-4 z-40 flex flex-col items-end gap-3 md:right-6 md:bottom-6">
+      <div className="fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 flex flex-col items-end gap-3 md:right-6 md:bottom-6">
         <AnimatePresence>
           {bubble && !open ? (
             <motion.div
@@ -190,7 +190,7 @@ export function ElectricChat() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.98 }}
             transition={{ type: "spring", stiffness: 260, damping: 24 }}
-            className="fixed right-3 bottom-[5.5rem] z-40 h-[min(72vh,600px)] w-[min(calc(100vw-1.5rem),400px)] origin-bottom-right md:right-6 md:bottom-24"
+            className="fixed right-3 bottom-[calc(5.5rem+env(safe-area-inset-bottom))] z-40 h-[min(70dvh,600px)] w-[min(calc(100vw-1.5rem),400px)] origin-bottom-right md:right-6 md:bottom-24"
             onKeyDown={(e) => {
               if (e.key === "Escape") setOpen(false);
             }}
@@ -306,7 +306,7 @@ export function ElectricChat() {
                   onChange={(e) => setDraft(e.target.value)}
                   placeholder="Escribe un componente o una duda…"
                   autoComplete="off"
-                  className="h-11 min-w-0 flex-1 rounded-full border border-line-strong bg-surface/85 px-4 text-[15px] text-ink placeholder:text-muted/70 focus:border-ink focus:outline-none"
+                  className="h-11 min-w-0 flex-1 rounded-full border border-line-strong bg-surface/85 px-4 text-base text-ink placeholder:text-muted/70 focus:border-ink focus:outline-none md:text-[15px]"
                 />
                 <button
                   type="submit"
