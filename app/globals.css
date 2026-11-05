@@ -1,26 +1,226 @@
 @import "tailwindcss";
 
+/*
+  ElectronicShop — sistema visual "mesa de trabajo".
+  Tema claro único. Un solo acento (cobre). Verde PCB solo para estados.
+*/
+@theme {
+  --color-bg: #f6f5f2;
+  --color-surface: #ffffff;
+  --color-ink: #0d0c0b;
+  --color-muted: #57534c;
+  --color-line: #e2dfd8;
+  --color-line-strong: #c9c4ba;
+  --color-copper: #9e4f1e;
+  --color-copper-soft: #f3e4d8;
+  --color-pcb: #0f5a42;
+  --color-pcb-soft: #ddf0e7;
+  --color-danger: #b42318;
+  --color-danger-soft: #fde8e6;
+
+  --font-sans: var(--font-instrument), system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --shadow-card: 0 1px 2px rgb(22 21 19 / 0.05), 0 16px 40px -16px rgb(22 21 19 / 0.22);
+  --shadow-tile: 0 1px 1px rgb(22 21 19 / 0.04), 0 10px 30px -10px rgb(22 21 19 / 0.18);
+  --shadow-card-hover: 0 2px 4px rgb(13 12 11 / 0.06), 0 32px 64px -24px rgb(13 12 11 / 0.35);
+
+  --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --breakpoint-xs: 30rem;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-copper);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--color-copper-soft);
+}
+
+/* Contenedor principal con gutter seguro. 88 rem en todo el sitio, para que
+   cabecera, secciones y pie aprovechen el ancho de las pantallas grandes. */
+@utility wrap {
+  max-width: 88rem;
+  margin-inline: auto;
+  padding-left: max(1rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1rem, env(safe-area-inset-right, 0px));
+}
+
+/* Etiqueta monoespaciada tipo hoja de datos */
+@utility mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Eyebrow con la pista de cobre */
+@utility eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  &::before {
+    content: "";
+    width: 1.375rem;
+    height: 1px;
+    background: var(--color-copper);
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Liquid glass: vidrio grueso y translúcido. Desenfoca y satura lo que hay
+   detrás (la malla y sus celdas encendidas se ven como manchas de color), un
+   bloom de luz que sigue al cursor (--mx / --my, puestos por useTilt) y un
+   filo que refracta: blanco en la esquina iluminada, tinta tenue en la
+   opuesta. Los dos pseudoelementos quedan bajo el contenido gracias a
+   isolation + z-index negativo. */
+@utility glass {
+  position: relative;
+  isolation: isolate;
+  background: color-mix(in oklab, var(--color-surface) 46%, transparent);
+  -webkit-backdrop-filter: blur(22px) saturate(1.7);
+  backdrop-filter: blur(22px) saturate(1.7);
+  border: 1px solid rgb(255 255 255 / 0.55);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 1),
+    inset 0 -1px 0 rgb(255 255 255 / 0.4),
+    inset 0 0 0 1px rgb(255 255 255 / 0.25),
+    inset 0 0 36px rgb(255 255 255 / 0.28),
+    0 1px 2px rgb(13 12 11 / 0.04),
+    0 24px 56px -24px rgb(13 12 11 / 0.26);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+      radial-gradient(130% 80% at var(--mx, 22%) var(--my, -18%), rgb(255 255 255 / 0.9), rgb(255 255 255 / 0) 58%),
+      radial-gradient(70% 45% at 100% 112%, rgb(255 255 255 / 0.45), rgb(255 255 255 / 0) 62%);
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    padding: 1.5px;
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 1) 0%,
+      rgb(255 255 255 / 0.2) 32%,
+      rgb(13 12 11 / 0.07) 68%,
+      rgb(255 255 255 / 0.75) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+}
+
+/* Vidrio que se destaca al pasar el cursor (también cuando el cursor está
+   sobre su grupo): más luz interior y sombra más profunda. */
+@utility glass-lift {
+  transition:
+    box-shadow 300ms var(--ease-out-soft),
+    border-color 300ms var(--ease-out-soft);
+  &:hover,
+  :where(.group):hover & {
+    border-color: rgb(255 255 255 / 0.85);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 1),
+      inset 0 -1px 0 rgb(255 255 255 / 0.5),
+      inset 0 0 0 1px rgb(255 255 255 / 0.35),
+      inset 0 0 48px rgb(255 255 255 / 0.4),
+      0 2px 4px rgb(13 12 11 / 0.05),
+      0 36px 72px -28px rgb(13 12 11 / 0.34);
+  }
+}
+
+/* Barra de vidrio para la cabecera pegajosa. */
+@utility glass-bar {
+  background: color-mix(in oklab, var(--color-bg) 55%, transparent);
+  -webkit-backdrop-filter: blur(22px) saturate(1.6);
+  backdrop-filter: blur(22px) saturate(1.6);
+  border-bottom: 1px solid rgb(255 255 255 / 0.6);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.7),
+    inset 0 -1px 0 rgb(255 255 255 / 0.5),
+    0 1px 0 rgb(13 12 11 / 0.05);
+}
+
+/* Halo del color de fondo alrededor de las letras grandes, para que las
+   celdas encendidas de la malla nunca se peguen al texto. */
+@utility grid-guard {
+  text-shadow:
+    0 0 6px var(--color-bg),
+    0 0 14px var(--color-bg),
+    0 0 30px var(--color-bg),
+    0 0 52px var(--color-bg);
+}
+
+/* Línea tipo pista de cobre entre pasos */
+@utility trace-line {
+  background-image: linear-gradient(to right, var(--color-line-strong) 50%, transparent 50%);
+  background-size: 10px 1px;
+  background-repeat: repeat-x;
+  background-position: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
