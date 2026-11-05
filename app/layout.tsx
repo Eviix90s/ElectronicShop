@@ -6,6 +6,7 @@ import { CartToast } from "@/components/cart/cart-toast";
 import { ElectricChat } from "@/components/chat/electric-chat";
 import { GridPulse } from "@/components/ui/grid-pulse";
 import { site } from "@/lib/data";
+import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 const instrument = Instrument_Sans({
@@ -21,7 +22,6 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
