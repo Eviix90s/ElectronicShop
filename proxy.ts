@@ -30,6 +30,13 @@ export async function proxy(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const { pathname } = request.nextUrl;
+  // Sin sesión, la página de contraseña nueva no sirve: el enlace venció o no se abrió.
+  if (!user && pathname === "/nueva-contrasena") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/recuperar";
+    url.search = "";
+    return NextResponse.redirect(url);
+  }
   if (!user && pathname.startsWith("/mi-cuenta")) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";

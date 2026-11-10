@@ -34,6 +34,15 @@ export default function LoginPage({ searchParams }: { searchParams: SearchParams
 }
 
 async function LoginWithNext({ searchParams }: { searchParams: SearchParams }) {
-  const next = (await searchParams).next;
-  return <LoginForm next={typeof next === "string" ? next : undefined} />;
+  const { next, error } = await searchParams;
+  return (
+    <>
+      {error === "enlace" ? (
+        <p className="mb-5 text-sm text-danger" role="alert">
+          El enlace no es válido o ya venció. Inicia sesión o pide uno nuevo.
+        </p>
+      ) : null}
+      <LoginForm next={typeof next === "string" ? next : undefined} />
+    </>
+  );
 }

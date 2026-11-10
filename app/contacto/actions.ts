@@ -1,6 +1,7 @@
 "use server";
 
 import { z } from "zod";
+import { createClient } from "@/lib/supabase/server";
 
 const schema = z.object({
   nombre: z.string().trim().min(2, "Escribe tu nombre").max(80),
@@ -33,6 +34,26 @@ export async function sendContact(_prev: ContactState, formData: FormData): Prom
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.CONTACT_TO_EMAIL;
 
+  // Con Supabase, el mensaje se guarda vía submit_contact() (valida y limita frecuencia).
+  const supabase = await createClient();
+  if (supabase) {
+    const { error } = await supabase.rpc("submit_contact", {
+      p_name: nombre,
+      p_email: correo,
+      p_subject: asunto,
+      p_message: mensaje,
+    });
+    if (error) {
+      console.error("[contacto] no se pudo guardar el mensaje", error.message);
+      return {
+        ok: false,
+        message: error.message.startsWith("Demasiados")
+          ? error.message
+          : "No pudimos enviar tu mensaje. Intenta de nuevo o escríbenos por correo.",
+      };
+    }
+  }
+
   if (apiKey && to) {
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -48,8 +69,8 @@ export async function sendContact(_prev: ContactState, formData: FormData): Prom
     if (!res.ok) {
       return { ok: false, message: "No pudimos enviar tu mensaje. Intenta de nuevo o escríbenos por correo." };
     }
-  } else {
-    console.info("[contacto] mensaje recibido (sin RESEND_API_KEY):", { nombre, correo, asunto });
+  } else if (!supabase) {
+    console.info("[contacto] mensaje recibido (modo demostración):", { asunto });
   }
   return { ok: true, message: "Recibimos tu mensaje. Te respondemos el mismo día hábil." };
 }

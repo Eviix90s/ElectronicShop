@@ -4,7 +4,7 @@ import { CtaBand } from "@/components/sections/cta-band";
 import { FaqList } from "@/components/sections/faq-list";
 import { faq } from "@/lib/data";
 import type { FaqItem } from "@/lib/data/types";
-import { plural } from "@/lib/utils";
+import { jsonForScript, plural } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Preguntas frecuentes",
@@ -32,7 +32,7 @@ export default function FaqPage() {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonForScript(jsonLd) }} />
       <section className="wrap py-14 md:py-20">
         <p className="eyebrow">Preguntas frecuentes</p>
         {/* Misma tipografía, tamaño y posición que los títulos de la portada. */}

@@ -10,7 +10,8 @@ const schema = z
   .object({
     name: z.string().trim().min(2, "Escribe tu nombre completo").max(80),
     email: z.string().trim().email("Escribe un correo válido"),
-    phone: z.string().trim().min(8, "Escribe un teléfono válido").max(20),
+    // Misma regla que la base (orders.phone): dígitos, espacios, +, guiones y paréntesis.
+    phone: z.string().trim().regex(/^[0-9+() -]{8,20}$/, "Escribe un teléfono válido"),
     delivery: z.enum(["campus", "envio"]),
     address: z.string().trim().max(200).optional(),
     payment: z.enum(["tarjeta", "paypal", "efectivo"]),
@@ -85,7 +86,7 @@ export async function createOrder(payload: OrderInputPayload): Promise<CreateOrd
     const msg = error?.message ?? "";
     return {
       ok: false,
-      message: msg.startsWith("Sin existencias")
+      message: msg.startsWith("Sin existencias") || msg.startsWith("Demasiados")
         ? msg
         : "No pudimos registrar tu pedido. Intenta de nuevo en un momento.",
     };

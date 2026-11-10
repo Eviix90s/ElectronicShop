@@ -2,8 +2,8 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
-import { Info, LogIn, UserPlus } from "lucide-react";
-import { signIn, signUp, type AuthState } from "@/app/auth/actions";
+import { Info, KeyRound, LogIn, MailCheck, UserPlus } from "lucide-react";
+import { requestPasswordReset, signIn, signUp, updatePassword, type AuthState } from "@/app/auth/actions";
 import { Button } from "@/components/ui/button";
 import { Field, Input, Select } from "@/components/ui/field";
 
@@ -39,6 +39,9 @@ export function LoginForm({ next }: { next?: string }) {
       <Field label="Contraseña" htmlFor="password" error={state.errors?.password}>
         <Input id="password" name="password" type="password" autoComplete="current-password" required aria-invalid={Boolean(state.errors?.password)} />
       </Field>
+      <Link href="/recuperar" className="-mt-2 self-end text-sm text-muted underline underline-offset-4 hover:text-ink">
+        ¿Olvidaste tu contraseña?
+      </Link>
       <Message state={state} />
       <Button type="submit" size="lg" disabled={pending} className="w-full">
         <LogIn className="size-[18px]" strokeWidth={1.7} aria-hidden="true" />
@@ -97,6 +100,47 @@ export function RegisterForm() {
           Inicia sesión
         </Link>
       </p>
+    </form>
+  );
+}
+
+export function ResetRequestForm() {
+  const [state, action, pending] = useActionState(requestPasswordReset, initial);
+  return (
+    <form action={action} className="flex flex-col gap-5" noValidate>
+      <Field label="Correo de tu cuenta" htmlFor="email" error={state.errors?.email}>
+        <Input id="email" name="email" type="email" autoComplete="email" required aria-invalid={Boolean(state.errors?.email)} />
+      </Field>
+      <Message state={state} />
+      <Button type="submit" size="lg" disabled={pending} className="w-full">
+        <MailCheck className="size-[18px]" strokeWidth={1.7} aria-hidden="true" />
+        {pending ? "Enviando…" : "Enviar enlace"}
+      </Button>
+      <p className="text-center text-sm text-muted">
+        ¿La recordaste?{" "}
+        <Link href="/login" className="text-ink underline underline-offset-4">
+          Inicia sesión
+        </Link>
+      </p>
+    </form>
+  );
+}
+
+export function NewPasswordForm() {
+  const [state, action, pending] = useActionState(updatePassword, initial);
+  return (
+    <form action={action} className="flex flex-col gap-5" noValidate>
+      <Field label="Contraseña nueva" htmlFor="password" hint="Mínimo 8 caracteres." error={state.errors?.password}>
+        <Input id="password" name="password" type="password" autoComplete="new-password" minLength={8} required aria-invalid={Boolean(state.errors?.password)} />
+      </Field>
+      <Field label="Repite la contraseña" htmlFor="confirm" error={state.errors?.confirm}>
+        <Input id="confirm" name="confirm" type="password" autoComplete="new-password" minLength={8} required aria-invalid={Boolean(state.errors?.confirm)} />
+      </Field>
+      <Message state={state} />
+      <Button type="submit" size="lg" disabled={pending} className="w-full">
+        <KeyRound className="size-[18px]" strokeWidth={1.7} aria-hidden="true" />
+        {pending ? "Guardando…" : "Guardar contraseña"}
+      </Button>
     </form>
   );
 }

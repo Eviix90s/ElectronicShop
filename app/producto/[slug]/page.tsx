@@ -11,7 +11,7 @@ import { Icon } from "@/components/ui/icon";
 import { SectionHead } from "@/components/ui/section-head";
 import { StockDot, Tag } from "@/components/ui/tag";
 import { getCategoryBySlug, getProductBySlug, getRelatedProducts, products, site } from "@/lib/data";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, jsonForScript } from "@/lib/utils";
 
 type Params = Promise<{ slug: string }>;
 
@@ -79,7 +79,7 @@ async function ProductContent({ params }: { params: Params }) {
 
   return (
     <div className="wrap py-8 md:py-12">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonForScript(jsonLd) }} />
       <nav className="mono-label flex flex-wrap items-center gap-1.5" aria-label="Ruta">
         <Link href="/tienda" className="hover:text-ink">
           Tienda
