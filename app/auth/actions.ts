@@ -74,9 +74,15 @@ export async function signUp(_prev: AuthState, formData: FormData): Promise<Auth
   if (error) {
     return {
       ok: false,
-      message: error.code === "weak_password" ? "Esa contraseña es muy débil. Usa letras y números." : "No pudimos crear la cuenta. Intenta de nuevo.",
+      message:
+        error.code === "weak_password"
+          ? "Esa contraseña es muy débil. Usa letras y números."
+          : error.code === "user_already_exists"
+            ? "Ese correo ya tiene cuenta. Inicia sesión o recupera tu contraseña."
+            : "No pudimos crear la cuenta. Intenta de nuevo.",
     };
   }
+  // Sin confirmación por correo, Supabase devuelve la sesión y la cuenta entra directo.
   if (data.session) redirect("/mi-cuenta");
   // Mismo mensaje si el correo ya existía: no revela qué correos tienen cuenta.
   return { ok: true, message: "Te enviamos un correo para confirmar tu cuenta. Revisa tu bandeja y vuelve a iniciar sesión." };
