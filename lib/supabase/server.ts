@@ -1,6 +1,7 @@
 import "server-only";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { connection } from "next/server";
 import { SUPABASE_ANON_KEY, SUPABASE_URL, supabaseConfigured } from "./env";
 
 /**
@@ -10,6 +11,9 @@ import { SUPABASE_ANON_KEY, SUPABASE_URL, supabaseConfigured } from "./env";
  */
 export async function createClient() {
   if (!supabaseConfigured) return null;
+  // El cliente lee la hora para revisar la sesión (Date.now()); eso no se permite en
+  // la precarga con Cache Components, así que todo lo que usa Supabase espera a la visita real.
+  await connection();
   const cookieStore = await cookies();
   return createServerClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     cookies: {
